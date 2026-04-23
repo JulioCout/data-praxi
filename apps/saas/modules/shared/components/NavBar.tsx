@@ -250,7 +250,7 @@ export function NavBar() {
 	const t = useTranslations();
 	const pathname = usePathname();
 	const { user } = useSession();
-	const { activeOrganization, isOrganizationAdmin } = useActiveOrganization();
+	const { activeOrganization, isOrganizationAdmin, activeOrganizationUserRole } = useActiveOrganization();
 	const { isCollapsed, toggleCollapsed } = useSidebar();
 	const isMobile = useIsMobile();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -330,6 +330,16 @@ export function NavBar() {
 							icon: SettingsIcon,
 							isActive: pathname.startsWith(`${orgSettingsPrefix}/`),
 							subItems: organizationSubItems,
+						},
+					]
+				: []),
+			...(activeOrganizationUserRole === "test"
+				? [
+						{
+							label: "Controle Teste",
+							href: "/controleteste",
+							icon: BotMessageSquareIcon,
+							isActive: pathname.startsWith("/controleteste"),
 						},
 					]
 				: []),
