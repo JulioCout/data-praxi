@@ -250,7 +250,7 @@ export function NavBar() {
 	const t = useTranslations();
 	const pathname = usePathname();
 	const { user } = useSession();
-	const { activeOrganization, isOrganizationAdmin, activeOrganizationUserRole } = useActiveOrganization();
+	const { activeOrganization, isOrganizationAdmin } = useActiveOrganization();
 	const { isCollapsed, toggleCollapsed } = useSidebar();
 	const isMobile = useIsMobile();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -333,7 +333,7 @@ export function NavBar() {
 						},
 					]
 				: []),
-			...(activeOrganizationUserRole === "test"
+			...(isOrganizationAdmin
 				? [
 						{
 							label: "Controle Teste",

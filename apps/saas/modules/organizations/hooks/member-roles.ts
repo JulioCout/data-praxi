@@ -8,6 +8,5 @@ export function useOrganizationMemberRoles() {
 		member: t("organizations.roles.member"),
 		owner: t("organizations.roles.owner"),
 		admin: t("organizations.roles.admin"),
-		test: "roletest",
 	} satisfies Record<OrganizationMemberRole, string>;
 }
