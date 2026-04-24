@@ -22,7 +22,7 @@
 		"@repo/database": "workspace:*",
 		"@repo/logs": "workspace:*",
 		"dodopayments": "^2.28.2",
-		"stripe": "^22.0.2",
+		"stripe": "^22.1.0",
 		"ufo": "catalog:",
 		"zod": "catalog:"
 	},
