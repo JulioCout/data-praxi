@@ -1,0 +1,38 @@
+{
+	"common": {
+		"openLinkInBrowser": "Se você deseja abrir o link em um navegador diferente do seu padrão, copie e cole este link:",
+		"otp": "Senha de uso único",
+		"useLink": "ou use o seguinte link:"
+	},
+	"emailVerification": {
+		"body": "Olá,\npor favor, clique no link abaixo para verificar este novo endereço de e-mail.",
+		"confirmEmail": "Verificar e-mail",
+		"subject": "Verifique seu e-mail"
+	},
+	"forgotPassword": {
+		"body": "Olá,\nvocê solicitou a redefinição de senha.\n\nClique no botão abaixo para redefinir sua senha.",
+		"resetPassword": "Redefinir senha",
+		"subject": "Redefina sua senha"
+	},
+	"magicLink": {
+		"body": "Olá,\nvocê solicitou um e-mail de login do supastarter.\n\nClique no link abaixo para fazer o login.",
+		"login": "Login",
+		"subject": "Login no supastarter"
+	},
+	"newUser": {
+		"body": "Olá,\nobrigado por se inscrever no supastarter.\n\nPara começar a usar nosso aplicativo, por favor confirme seu endereço de e-mail clicando no link abaixo.",
+		"confirmEmail": "Confirmar e-mail",
+		"subject": "Confirme seu e-mail"
+	},
+	"organizationInvitation": {
+		"body": "Você foi convidado para se juntar à organização {organizationName}. Clique no botão abaixo ou copie e cole o link em seu navegador de preferência para aceitar o convite e entrar na organização.",
+		"headline": "Junte-se à organização {organizationName}",
+		"join": "Entrar na organização",
+		"subject": "Você foi convidado para se juntar a uma organização"
+	},
+	"notification": {
+		"openInApp": "Abra esta notificação no aplicativo:",
+		"subject": "Nova notificação",
+		"view": "Visualizar"
+	}
+}

@@ -54,13 +54,13 @@ export type OrganizationScalarFieldEnum = z.infer<typeof OrganizationScalarField
 
 // File: MemberScalarFieldEnum.schema.ts
 
-export const MemberScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'userId', 'role', 'cargo', 'createdAt'])
+export const MemberScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'userId', 'role', 'createdAt'])
 
 export type MemberScalarFieldEnum = z.infer<typeof MemberScalarFieldEnumSchema>;
 
 // File: InvitationScalarFieldEnum.schema.ts
 
-export const InvitationScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'email', 'role', 'cargo', 'status', 'expiresAt', 'inviterId', 'createdAt'])
+export const InvitationScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'email', 'role', 'status', 'expiresAt', 'inviterId', 'createdAt'])
 
 export type InvitationScalarFieldEnum = z.infer<typeof InvitationScalarFieldEnumSchema>;
 
@@ -263,7 +263,6 @@ export const MemberSchema = z.object({
   organizationId: z.string(),
   userId: z.string(),
   role: z.string(),
-  cargo: z.string().default("teste"),
   createdAt: z.date(),
 });
 
@@ -276,8 +275,7 @@ export const InvitationSchema = z.object({
   id: z.string(),
   organizationId: z.string(),
   email: z.string(),
-  role: z.string().default("member"),
-  cargo: z.string().nullish(),
+  role: z.string().nullish(),
   status: z.string(),
   expiresAt: z.date(),
   inviterId: z.string(),
