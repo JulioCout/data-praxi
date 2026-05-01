@@ -21,6 +21,7 @@ import { parse as parseCookies } from "cookie";
 
 import { config } from "./config";
 import { updateSeatsInOrganizationSubscription } from "./lib/organization";
+import * as permissions from "./permissions";
 import { invitationOnlyPlugin } from "./plugins/invitation-only";
 
 const getLocaleFromRequest = (request?: Request) => {
@@ -238,6 +239,15 @@ export const auth = betterAuth({
 			},
 		}),
 		organization({
+			ac: permissions.ac,
+			roles: {
+				owner: permissions.owner,
+				admin: permissions.admin,
+				member: permissions.member,
+				gerente: permissions.gerente,
+				supervisor: permissions.supervisor,
+				auxiliar: permissions.auxiliar,
+			},
 			sendInvitationEmail: async ({ email, id, organization }, request) => {
 				const locale = getLocaleFromRequest(request);
 				const existingUser = await getUserByEmail(email);

@@ -9,12 +9,23 @@ import {
 import { createAuthClient } from "better-auth/react";
 
 import type { auth } from ".";
+import * as permissions from "./permissions";
 
 export const authClient = createAuthClient({
 	plugins: [
 		inferAdditionalFields<typeof auth>(),
 		magicLinkClient(),
-		organizationClient(),
+		organizationClient({
+			ac: permissions.ac,
+			roles: {
+				owner: permissions.owner,
+				admin: permissions.admin,
+				member: permissions.member,
+				gerente: permissions.gerente,
+				supervisor: permissions.supervisor,
+				auxiliar: permissions.auxiliar,
+			},
+		}),
 		adminClient(),
 		passkeyClient(),
 		twoFactorClient(),

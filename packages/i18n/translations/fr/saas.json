@@ -259,6 +259,9 @@
 			"title": "Vos organisations"
 		},
 		"roles": {
+			"gerente": "Gérant",
+			"supervisor": "Superviseur",
+			"auxiliar": "Assistant",
 			"admin": "Administrateur",
 			"member": "Membre",
 			"owner": "Propriétaire"

@@ -258,6 +258,9 @@
 			"title": "Deine Organisationen"
 		},
 		"roles": {
+			"gerente": "Manager",
+			"supervisor": "Supervisor",
+			"auxiliar": "Assistent",
 			"admin": "Administration",
 			"member": "Mitglied",
 			"owner": "Eigentümer"

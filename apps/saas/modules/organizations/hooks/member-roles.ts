@@ -8,5 +8,8 @@ export function useOrganizationMemberRoles() {
 		member: t("organizations.roles.member"),
 		owner: t("organizations.roles.owner"),
 		admin: t("organizations.roles.admin"),
+		gerente: "Gerente",
+		supervisor: "Supervisor",
+		auxiliar: "Auxiliar"
 	} satisfies Record<OrganizationMemberRole, string>;
 }
