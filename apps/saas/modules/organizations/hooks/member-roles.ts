@@ -5,11 +5,10 @@ export function useOrganizationMemberRoles() {
 	const t = useTranslations();
 
 	return {
-		member: t("organizations.roles.member"),
-		owner: t("organizations.roles.owner"),
-		admin: t("organizations.roles.admin"),
-		gerente: "Gerente",
+		owner: "Administrador",
+		admin: "Coordenador",
 		supervisor: "Supervisor",
+		member: "Técnico",
 		auxiliar: "Auxiliar"
 	} satisfies Record<OrganizationMemberRole, string>;
 }

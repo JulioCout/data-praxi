@@ -21,7 +21,6 @@ export const authClient = createAuthClient({
 				owner: permissions.owner,
 				admin: permissions.admin,
 				member: permissions.member,
-				gerente: permissions.gerente,
 				supervisor: permissions.supervisor,
 				auxiliar: permissions.auxiliar,
 			},

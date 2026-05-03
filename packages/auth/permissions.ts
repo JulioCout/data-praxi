@@ -25,10 +25,6 @@ export const member = ac.newRole({
 });
 
 // Novos papéis baseados nos padrões
-export const gerente = ac.newRole({
-	...adminAc.statements,
-});
-
 export const supervisor = ac.newRole({
 	...memberAc.statements,
 });
