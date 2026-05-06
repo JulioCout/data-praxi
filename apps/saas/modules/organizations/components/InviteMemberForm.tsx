@@ -8,9 +8,17 @@ import { Button } from "@repo/ui/components/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@repo/ui/components/form";
 import { Input } from "@repo/ui/components/input";
 import { toastError, toastSuccess } from "@repo/ui/components/toast";
-import { SettingsItem } from "@shared/components/SettingsItem";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@repo/ui/components/dialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -22,6 +30,7 @@ const formSchema = z.object({
 export function InviteMemberForm({ organizationId }: { organizationId: string }) {
 	const t = useTranslations();
 	const queryClient = useQueryClient();
+	const [isOpen, setIsOpen] = useState(false);
 
 	const form = useForm({
 		resolver: zodResolver(formSchema),
@@ -48,6 +57,7 @@ export function InviteMemberForm({ organizationId }: { organizationId: string })
 				queryKey: fullOrganizationQueryKey(organizationId),
 			});
 
+			setIsOpen(false);
 			toastSuccess(t("organizations.settings.members.inviteMember.notifications.success.title"));
 		} catch {
 			toastError(t("organizations.settings.members.inviteMember.notifications.error.title"));
@@ -55,51 +65,62 @@ export function InviteMemberForm({ organizationId }: { organizationId: string })
 	});
 
 	return (
-		<SettingsItem
-			title={t("organizations.settings.members.inviteMember.title")}
-			description={t("organizations.settings.members.inviteMember.description")}
-		>
-			<Form {...form}>
-				<form onSubmit={onSubmit} className="@container">
-					<div className="@md:flex-row gap-2 flex flex-col">
-						<div className="flex-1">
-							<FormField
-								control={form.control}
-								name="email"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("organizations.settings.members.inviteMember.email")}</FormLabel>
-										<FormControl>
-											<Input type="email" {...field} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						</div>
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+			<DialogTrigger asChild>
+				<Button>Convidar Membro</Button>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>{t("organizations.settings.members.inviteMember.title")}</DialogTitle>
+					<DialogDescription>
+						{t("organizations.settings.members.inviteMember.description")}
+					</DialogDescription>
+				</DialogHeader>
 
-						<div>
-							<FormField
-								control={form.control}
-								name="role"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("organizations.settings.members.inviteMember.role")}</FormLabel>
-										<FormControl>
-											<OrganizationRoleSelect value={field.value} onSelect={field.onChange} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						</div>
-					</div>
+				<Form {...form}>
+					<form onSubmit={onSubmit} className="flex flex-col gap-4">
+						<FormField
+							control={form.control}
+							name="email"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("organizations.settings.members.inviteMember.email")}</FormLabel>
+									<FormControl>
+										<Input type="email" placeholder="email@exemplo.com" {...field} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
 
-					<div className="mt-4 flex justify-end">
-						<Button type="submit" loading={form.formState.isSubmitting}>
-							{t("organizations.settings.members.inviteMember.submit")}
-						</Button>
-					</div>
-				</form>
-			</Form>
-		</SettingsItem>
+						<FormField
+							control={form.control}
+							name="role"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("organizations.settings.members.inviteMember.role")}</FormLabel>
+									<FormControl>
+										<OrganizationRoleSelect value={field.value} onSelect={field.onChange} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						<div className="mt-2 flex justify-end gap-2">
+							<Button 
+								variant="outline" 
+								type="button" 
+								className="text-foreground border-foreground/20" 
+								onClick={() => setIsOpen(false)}
+							>
+								Cancelar
+							</Button>
+							<Button type="submit" loading={form.formState.isSubmitting}>
+								{t("organizations.settings.members.inviteMember.submit")}
+							</Button>
+						</div>
+					</form>
+				</Form>
+			</DialogContent>
+		</Dialog>
 	);
 }

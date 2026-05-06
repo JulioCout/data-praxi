@@ -37,7 +37,9 @@ import {
 	SettingsIcon,
 	ShieldUserIcon,
 	UserCogIcon,
+	UserIcon,
 	UsersIcon,
+	BuildingIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -59,6 +61,7 @@ interface NavMenuItem {
 	icon: React.ComponentType<{ className?: string }>;
 	isActive: boolean;
 	subItems?: NavSubItem[];
+	isTitle?: boolean;
 }
 
 interface NavMenuListProps {
@@ -84,6 +87,18 @@ function NavMenuList({
 		<TooltipProvider delayDuration={0}>
 			<ul className={listClassName}>
 				{menuItems.map((menuItem) => {
+					if (menuItem.isTitle) {
+						if (isCollapsedEffective) return null;
+						return (
+							<li
+								key={menuItem.label}
+								className="mt-6 mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground/60"
+							>
+								{menuItem.label}
+							</li>
+						);
+					}
+
 					const parentClasses = cn(
 						"gap-3 px-3 py-2 text-sm flex w-full items-center rounded-lg border border-transparent whitespace-nowrap transition-colors",
 						{
@@ -327,9 +342,28 @@ export function NavBar() {
 				? [
 						{
 							label: "Gestão da Equipe",
-							href: `${basePath}/team`,
+							href: "",
 							icon: UsersIcon,
-							isActive: pathname.startsWith(`${basePath}/team`),
+							isActive: false,
+							isTitle: true,
+						},
+						{
+							label: "Pessoas",
+							href: `${basePath}/team/members`,
+							icon: UserIcon,
+							isActive: pathname.startsWith(`${basePath}/team/members`),
+						},
+						{
+							label: "Equipes",
+							href: `${basePath}/team/teams`,
+							icon: UsersIcon,
+							isActive: pathname.startsWith(`${basePath}/team/teams`),
+						},
+						{
+							label: "Unidades",
+							href: `${basePath}/team/units`,
+							icon: BuildingIcon,
+							isActive: pathname.startsWith(`${basePath}/team/units`),
 						},
 					]
 				: []),
