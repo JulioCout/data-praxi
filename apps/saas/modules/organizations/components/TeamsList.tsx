@@ -169,6 +169,9 @@ export function TeamsList({ organizationId }: { organizationId: string }) {
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 	const [newTeamName, setNewTeamName] = useState("");
 
+	const [renamingTeam, setRenamingTeam] = useState<{ id: string; name: string } | null>(null);
+	const [renameInput, setRenameInput] = useState("");
+
 	const handleCreateTeam = async () => {
 		if (!newTeamName.trim()) return;
 
@@ -192,13 +195,15 @@ export function TeamsList({ organizationId }: { organizationId: string }) {
 		);
 	};
 
-	const handleUpdateTeam = async (teamId: string, newName: string) => {
+	const handleUpdateTeam = async () => {
+		if (!renamingTeam || !renameInput.trim()) return;
+
 		toastPromise(
 			async () => {
 				await authClient.organization.updateTeam({
-					teamId,
+					teamId: renamingTeam.id,
 					data: {
-						name: newName,
+						name: renameInput.trim(),
 					},
 				});
 			},
@@ -206,6 +211,8 @@ export function TeamsList({ organizationId }: { organizationId: string }) {
 				loading: "Renomeando equipe...",
 				success: () => {
 					void queryClient.invalidateQueries({ queryKey: organizationTeamsQueryKey(organizationId) });
+					setRenamingTeam(null);
+					setRenameInput("");
 					return "Equipe renomeada com sucesso.";
 				},
 				error: "Erro ao renomear equipe.",
@@ -271,6 +278,40 @@ export function TeamsList({ organizationId }: { organizationId: string }) {
 				</div>
 			)}
 
+			<Dialog 
+				open={!!renamingTeam} 
+				onOpenChange={(isOpen) => {
+					if (!isOpen) {
+						setRenamingTeam(null);
+						setRenameInput("");
+					}
+				}}
+			>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Renomear Equipe</DialogTitle>
+						<DialogDescription>
+							Digite o novo nome para a equipe.
+						</DialogDescription>
+					</DialogHeader>
+					<div className="space-y-4 py-4">
+						<div className="space-y-2">
+							<Label htmlFor="rename-team-name">Nome da Equipe</Label>
+							<Input 
+								id="rename-team-name" 
+								value={renameInput} 
+								onChange={(e) => setRenameInput(e.target.value)} 
+								onKeyDown={(e) => e.key === "Enter" && handleUpdateTeam()}
+							/>
+						</div>
+					</div>
+					<DialogFooter>
+						<Button variant="outline" onClick={() => setRenamingTeam(null)} className="text-foreground border-foreground/20">Cancelar</Button>
+						<Button onClick={handleUpdateTeam} disabled={!renameInput.trim() || renameInput.trim() === renamingTeam?.name}>Salvar</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
 			{teams?.length === 0 ? (
 				<div className="text-center py-12 text-muted-foreground border rounded-2xl bg-card">
 					<UsersIcon className="size-12 mx-auto mb-4 text-muted-foreground/50" />
@@ -298,10 +339,8 @@ export function TeamsList({ organizationId }: { organizationId: string }) {
 											size="sm" 
 											className="gap-2 text-foreground border-foreground/20"
 											onClick={() => {
-												const newName = prompt("Novo nome da equipe:", team.name);
-												if (newName && newName.trim() !== team.name) {
-													handleUpdateTeam(team.id, newName.trim());
-												}
+												setRenamingTeam({ id: team.id, name: team.name });
+												setRenameInput(team.name);
 											}}
 										>
 											<Edit2Icon className="size-4" />
