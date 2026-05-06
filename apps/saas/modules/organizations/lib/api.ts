@@ -169,10 +169,7 @@ export const useTeamMembersQuery = (teamId: string) => {
 	return useQuery({
 		queryKey: teamMembersQueryKey(teamId),
 		queryFn: async () => {
-			const { data, error } = await authClient.organization.listTeamMembers({
-				query: { teamId },
-			});
-			if (error) throw new Error(error.message || "Failed to fetch team members");
+			const data = await orpcClient.organizations.listTeamMembers({ teamId });
 			return data;
 		},
 	});
