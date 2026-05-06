@@ -70,6 +70,18 @@ export const TeamMemberScalarFieldEnumSchema = z.enum(['id', 'teamId', 'userId',
 
 export type TeamMemberScalarFieldEnum = z.infer<typeof TeamMemberScalarFieldEnumSchema>;
 
+// File: UnitScalarFieldEnum.schema.ts
+
+export const UnitScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'teamId', 'name', 'street', 'state', 'city', 'neighborhood', 'zipCode', 'number', 'complement', 'contactName', 'contactRole', 'contactPhone', 'contactEmail', 'createdAt', 'updatedAt'])
+
+export type UnitScalarFieldEnum = z.infer<typeof UnitScalarFieldEnumSchema>;
+
+// File: LocationScalarFieldEnum.schema.ts
+
+export const LocationScalarFieldEnumSchema = z.enum(['id', 'unitId', 'name', 'description', 'isActive', 'createdAt', 'updatedAt'])
+
+export type LocationScalarFieldEnum = z.infer<typeof LocationScalarFieldEnumSchema>;
+
 // File: InvitationScalarFieldEnum.schema.ts
 
 export const InvitationScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'email', 'role', 'teamId', 'status', 'expiresAt', 'inviterId', 'createdAt'])
@@ -305,6 +317,46 @@ export const TeamMemberSchema = z.object({
 });
 
 export type TeamMemberType = z.infer<typeof TeamMemberSchema>;
+
+
+// File: Unit.schema.ts
+
+export const UnitSchema = z.object({
+  id: z.string(),
+  organizationId: z.string(),
+  teamId: z.string().nullish(),
+  name: z.string(),
+  street: z.string().nullish(),
+  state: z.string().nullish(),
+  city: z.string().nullish(),
+  neighborhood: z.string().nullish(),
+  zipCode: z.string().nullish(),
+  number: z.string().nullish(),
+  complement: z.string().nullish(),
+  contactName: z.string().nullish(),
+  contactRole: z.string().nullish(),
+  contactPhone: z.string().nullish(),
+  contactEmail: z.string().nullish(),
+  createdAt: z.date(),
+  updatedAt: z.date().nullish(),
+});
+
+export type UnitType = z.infer<typeof UnitSchema>;
+
+
+// File: Location.schema.ts
+
+export const LocationSchema = z.object({
+  id: z.string(),
+  unitId: z.string(),
+  name: z.string(),
+  description: z.string().nullish(),
+  isActive: z.boolean().default(true),
+  createdAt: z.date(),
+  updatedAt: z.date().nullish(),
+});
+
+export type LocationType = z.infer<typeof LocationSchema>;
 
 
 // File: Invitation.schema.ts

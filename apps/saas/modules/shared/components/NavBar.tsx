@@ -338,35 +338,6 @@ export function NavBar() {
 				icon: BotMessageSquareIcon,
 				isActive: pathname.startsWith("/chatbot"),
 			},
-			...(authConfig.organizations.enable && activeOrganization && isOrganizationAdmin
-				? [
-						{
-							label: "Gestão da Equipe",
-							href: "",
-							icon: UsersIcon,
-							isActive: false,
-							isTitle: true,
-						},
-						{
-							label: "Pessoas",
-							href: `${basePath}/team/members`,
-							icon: UserIcon,
-							isActive: pathname.startsWith(`${basePath}/team/members`),
-						},
-						{
-							label: "Equipes",
-							href: `${basePath}/team/teams`,
-							icon: UsersIcon,
-							isActive: pathname.startsWith(`${basePath}/team/teams`),
-						},
-						{
-							label: "Unidades",
-							href: `${basePath}/team/units`,
-							icon: BuildingIcon,
-							isActive: pathname.startsWith(`${basePath}/team/units`),
-						},
-					]
-				: []),
 			...(organizationSubItems
 				? [
 						{
@@ -402,6 +373,35 @@ export function NavBar() {
 							href: "/admin",
 							icon: ShieldUserIcon,
 							isActive: pathname.startsWith("/admin/"),
+						},
+					]
+				: []),
+			...(authConfig.organizations.enable && activeOrganization && isOrganizationAdmin
+				? [
+						{
+							label: "Gestão da Equipe",
+							href: "",
+							icon: UsersIcon,
+							isActive: false,
+							isTitle: true,
+						},
+						{
+							label: "Pessoas",
+							href: `${basePath}/team/members`,
+							icon: UserIcon,
+							isActive: pathname.startsWith(`${basePath}/team/members`),
+						},
+						{
+							label: "Equipes",
+							href: `${basePath}/team/teams`,
+							icon: UsersIcon,
+							isActive: pathname.startsWith(`${basePath}/team/teams`),
+						},
+						{
+							label: "Unidades",
+							href: `${basePath}/team/units`,
+							icon: BuildingIcon,
+							isActive: pathname.startsWith(`${basePath}/team/units`),
 						},
 					]
 				: []),
