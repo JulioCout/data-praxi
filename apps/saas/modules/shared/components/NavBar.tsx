@@ -37,6 +37,7 @@ import {
 	SettingsIcon,
 	ShieldUserIcon,
 	UserCogIcon,
+	UsersIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -322,6 +323,16 @@ export function NavBar() {
 				icon: BotMessageSquareIcon,
 				isActive: pathname.startsWith("/chatbot"),
 			},
+			...(authConfig.organizations.enable && activeOrganization && isOrganizationAdmin
+				? [
+						{
+							label: "Gestão da Equipe",
+							href: `${basePath}/team`,
+							icon: UsersIcon,
+							isActive: pathname.startsWith(`${basePath}/team`),
+						},
+					]
+				: []),
 			...(organizationSubItems
 				? [
 						{

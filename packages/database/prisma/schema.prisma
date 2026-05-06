@@ -38,10 +38,11 @@ model User {
   passkeys                 Passkey[]
   invitations              Invitation[]
   purchases                Purchase[]
-  members                  Member[]
   twofactors               TwoFactor[]
   notifications            Notification[]
   notificationPreferences  UserNotificationPreference[]
+  teammembers              TeamMember[]
+  members                  Member[]
 
   @@unique([email])
   @@unique([username])
@@ -59,6 +60,7 @@ model Session {
   impersonatedBy String?
 
   activeOrganizationId String?
+  activeTeamId         String?
 
   token     String
   createdAt DateTime
@@ -146,6 +148,7 @@ model Organization {
   members            Member[]
   invitations        Invitation[]
   purchases          Purchase[]
+  teams              Team[]
 
   @@unique([slug])
   @@map("organization")
@@ -166,12 +169,39 @@ model Member {
   @@map("member")
 }
 
+model Team {
+  id             String       @id @default(cuid())
+  name           String
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?    @updatedAt
+  teammembers    TeamMember[]
+
+  @@index([organizationId])
+  @@map("team")
+}
+
+model TeamMember {
+  id        String    @id @default(cuid())
+  teamId    String
+  team      Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime? @default(now())
+
+  @@index([teamId])
+  @@index([userId])
+  @@map("teamMember")
+}
+
 model Invitation {
   id             String       @id @default(cuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   email          String
   role           String?
+  teamId         String?
   status         String
   expiresAt      DateTime
   inviterId      String

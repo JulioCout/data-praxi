@@ -18,7 +18,7 @@ export type UserScalarFieldEnum = z.infer<typeof UserScalarFieldEnumSchema>;
 
 // File: SessionScalarFieldEnum.schema.ts
 
-export const SessionScalarFieldEnumSchema = z.enum(['id', 'expiresAt', 'ipAddress', 'userAgent', 'userId', 'impersonatedBy', 'activeOrganizationId', 'token', 'createdAt', 'updatedAt'])
+export const SessionScalarFieldEnumSchema = z.enum(['id', 'expiresAt', 'ipAddress', 'userAgent', 'userId', 'impersonatedBy', 'activeOrganizationId', 'activeTeamId', 'token', 'createdAt', 'updatedAt'])
 
 export type SessionScalarFieldEnum = z.infer<typeof SessionScalarFieldEnumSchema>;
 
@@ -58,9 +58,21 @@ export const MemberScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'user
 
 export type MemberScalarFieldEnum = z.infer<typeof MemberScalarFieldEnumSchema>;
 
+// File: TeamScalarFieldEnum.schema.ts
+
+export const TeamScalarFieldEnumSchema = z.enum(['id', 'name', 'organizationId', 'createdAt', 'updatedAt'])
+
+export type TeamScalarFieldEnum = z.infer<typeof TeamScalarFieldEnumSchema>;
+
+// File: TeamMemberScalarFieldEnum.schema.ts
+
+export const TeamMemberScalarFieldEnumSchema = z.enum(['id', 'teamId', 'userId', 'createdAt'])
+
+export type TeamMemberScalarFieldEnum = z.infer<typeof TeamMemberScalarFieldEnumSchema>;
+
 // File: InvitationScalarFieldEnum.schema.ts
 
-export const InvitationScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'email', 'role', 'status', 'expiresAt', 'inviterId', 'createdAt'])
+export const InvitationScalarFieldEnumSchema = z.enum(['id', 'organizationId', 'email', 'role', 'teamId', 'status', 'expiresAt', 'inviterId', 'createdAt'])
 
 export type InvitationScalarFieldEnum = z.infer<typeof InvitationScalarFieldEnumSchema>;
 
@@ -166,6 +178,7 @@ export const SessionSchema = z.object({
   userId: z.string(),
   impersonatedBy: z.string().nullish(),
   activeOrganizationId: z.string().nullish(),
+  activeTeamId: z.string().nullish(),
   token: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -269,6 +282,31 @@ export const MemberSchema = z.object({
 export type MemberType = z.infer<typeof MemberSchema>;
 
 
+// File: Team.schema.ts
+
+export const TeamSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  organizationId: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date().nullish(),
+});
+
+export type TeamType = z.infer<typeof TeamSchema>;
+
+
+// File: TeamMember.schema.ts
+
+export const TeamMemberSchema = z.object({
+  id: z.string(),
+  teamId: z.string(),
+  userId: z.string(),
+  createdAt: z.date().nullish(),
+});
+
+export type TeamMemberType = z.infer<typeof TeamMemberSchema>;
+
+
 // File: Invitation.schema.ts
 
 export const InvitationSchema = z.object({
@@ -276,6 +314,7 @@ export const InvitationSchema = z.object({
   organizationId: z.string(),
   email: z.string(),
   role: z.string().nullish(),
+  teamId: z.string().nullish(),
   status: z.string(),
   expiresAt: z.date(),
   inviterId: z.string(),

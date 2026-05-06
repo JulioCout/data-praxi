@@ -247,6 +247,9 @@ export const auth = betterAuth({
 				supervisor: permissions.supervisor,
 				auxiliar: permissions.auxiliar,
 			},
+			teams: {
+				enabled: true,
+			},
 			sendInvitationEmail: async ({ email, id, organization }, request) => {
 				const locale = getLocaleFromRequest(request);
 				const existingUser = await getUserByEmail(email);

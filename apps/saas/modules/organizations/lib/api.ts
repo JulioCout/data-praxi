@@ -146,3 +146,34 @@ export const useUpdateOrganizationMutation = () => {
 		},
 	});
 };
+
+/*
+ * Teams
+ */
+export const organizationTeamsQueryKey = (organizationId: string) => ["organization", organizationId, "teams"] as const;
+export const useOrganizationTeamsQuery = (organizationId: string) => {
+	return useQuery({
+		queryKey: organizationTeamsQueryKey(organizationId),
+		queryFn: async () => {
+			const { data, error } = await authClient.organization.listTeams({
+				query: { organizationId },
+			});
+			if (error) throw new Error(error.message || "Failed to fetch teams");
+			return data;
+		},
+	});
+};
+
+export const teamMembersQueryKey = (teamId: string) => ["team", teamId, "members"] as const;
+export const useTeamMembersQuery = (teamId: string) => {
+	return useQuery({
+		queryKey: teamMembersQueryKey(teamId),
+		queryFn: async () => {
+			const { data, error } = await authClient.organization.listTeamMembers({
+				query: { teamId },
+			});
+			if (error) throw new Error(error.message || "Failed to fetch team members");
+			return data;
+		},
+	});
+};

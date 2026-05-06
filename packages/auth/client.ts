@@ -24,6 +24,9 @@ export const authClient = createAuthClient({
 				supervisor: permissions.supervisor,
 				auxiliar: permissions.auxiliar,
 			},
+			teams: {
+				enabled: true,
+			},
 		}),
 		adminClient(),
 		passkeyClient(),
