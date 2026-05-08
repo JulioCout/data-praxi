@@ -20,7 +20,7 @@ export default async function TeamMembersPage({
 		<div className="container max-w-6xl py-8">
 			<div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 				<PageHeader
-					title="Pessoas"
+					title="Usuários"
 					subtitle="Gerencie os membros da organização, envie convites e defina seus cargos."
 				/>
 				<InviteMemberForm organizationId={organization.id} />

@@ -39,6 +39,7 @@ import {
 	UserIcon,
 	UsersIcon,
 	BuildingIcon,
+	SettingsIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -304,12 +305,12 @@ export function NavBar() {
 						{
 							label: "Configurações",
 							href: "",
-							icon: UsersIcon,
+							icon: SettingsIcon,
 							isActive: false,
 							isTitle: true,
 						},
 						{
-							label: "Pessoas",
+							label: "Usuários",
 							href: `${basePath}/team/members`,
 							icon: UserIcon,
 							isActive: pathname.startsWith(`${basePath}/team/members`),
