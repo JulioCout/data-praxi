@@ -34,7 +34,7 @@ import {
 	MenuIcon,
 	PanelLeftCloseIcon,
 	PanelLeftOpenIcon,
-	SettingsIcon,
+	Building2Icon,
 	ShieldUserIcon,
 	UserIcon,
 	UsersIcon,
@@ -302,7 +302,7 @@ export function NavBar() {
 			...(authConfig.organizations.enable && activeOrganization && isOrganizationAdmin
 				? [
 						{
-							label: "Gestão da Equipe",
+							label: "Configurações",
 							href: "",
 							icon: UsersIcon,
 							isActive: false,
@@ -327,9 +327,9 @@ export function NavBar() {
 							isActive: pathname.startsWith(`${basePath}/team/units`),
 						},
 						{
-							label: "Configurações",
+							label: "Organização",
 							href: `${orgSettingsPrefix}/general`,
-							icon: SettingsIcon,
+							icon: Building2Icon,
 							isActive: pathname.startsWith(`${orgSettingsPrefix}/`),
 						},
 					]
