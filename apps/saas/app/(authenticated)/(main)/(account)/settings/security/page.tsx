@@ -7,7 +7,6 @@ import { ConnectedAccountsBlock } from "@settings/components/ConnectedAccountsBl
 import { PasskeysBlock } from "@settings/components/PasskeysBlock";
 import { SetPasswordForm } from "@settings/components/SetPassword";
 import { TwoFactorBlock } from "@settings/components/TwoFactorBlock";
-import { PageHeader } from "@shared/components/PageHeader";
 import { SettingsList } from "@shared/components/SettingsList";
 import { getServerQueryClient } from "@shared/lib/server";
 import { getTranslations } from "next-intl/server";
@@ -50,7 +49,6 @@ export default async function AccountSettingsPage() {
 
 	return (
 		<>
-			<PageHeader title={t("title")} />
 
 			<SettingsList>
 				{config.enablePasswordLogin &&

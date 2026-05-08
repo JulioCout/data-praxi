@@ -36,7 +36,6 @@ import {
 	PanelLeftOpenIcon,
 	SettingsIcon,
 	ShieldUserIcon,
-	UserCogIcon,
 	UserIcon,
 	UsersIcon,
 	BuildingIcon,
@@ -279,51 +278,8 @@ export function NavBar() {
 	const startHref = basePath || "/";
 
 	const menuItems: NavMenuItem[] = useMemo(() => {
-		const accountSubItems: NavSubItem[] = [
-			{
-				label: t("settings.menu.account.general"),
-				href: "/settings/general",
-			},
-			{
-				label: t("settings.menu.account.security"),
-				href: "/settings/security",
-			},
-			{
-				label: t("settings.menu.account.notifications"),
-				href: "/settings/notifications",
-			},
-			...(paymentsConfig.billingAttachedTo === "user"
-				? [
-						{
-							label: t("settings.menu.account.billing"),
-							href: "/settings/billing",
-						},
-					]
-				: []),
-		];
 
 		const orgSettingsPrefix = `${basePath}/settings`;
-		const organizationSubItems: Array<NavSubItem> | undefined =
-			authConfig.organizations.enable && activeOrganization && isOrganizationAdmin
-				? [
-						{
-							label: t("settings.menu.organization.general"),
-							href: `${orgSettingsPrefix}/general`,
-						},
-						{
-							label: t("settings.menu.organization.members"),
-							href: `${orgSettingsPrefix}/members`,
-						},
-						...(paymentsConfig.billingAttachedTo === "organization" && isOrganizationAdmin
-							? [
-									{
-										label: t("settings.menu.organization.billing"),
-										href: `${orgSettingsPrefix}/billing`,
-									},
-								]
-							: []),
-					]
-				: undefined;
 
 		return [
 			{
@@ -332,40 +288,7 @@ export function NavBar() {
 				icon: HomeIcon,
 				isActive: pathname === "/" || pathname === basePath,
 			},
-			{
-				label: t("app.menu.aiChatbot"),
-				href: "/chatbot",
-				icon: BotMessageSquareIcon,
-				isActive: pathname.startsWith("/chatbot"),
-			},
-			...(organizationSubItems
-				? [
-						{
-							label: t("app.menu.organizationSettings"),
-							href: `${orgSettingsPrefix}/general`,
-							icon: SettingsIcon,
-							isActive: pathname.startsWith(`${orgSettingsPrefix}/`),
-							subItems: organizationSubItems,
-						},
-					]
-				: []),
-			...(isOrganizationAdmin
-				? [
-						{
-							label: "Controle Teste",
-							href: "/controleteste",
-							icon: BotMessageSquareIcon,
-							isActive: pathname.startsWith("/controleteste"),
-						},
-					]
-				: []),
-			{
-				label: t("app.menu.accountSettings"),
-				href: "/settings/general",
-				icon: UserCogIcon,
-				isActive: pathname.startsWith("/settings/"),
-				subItems: accountSubItems,
-			},
+
 			...(user?.role === "admin"
 				? [
 						{
@@ -402,6 +325,12 @@ export function NavBar() {
 							href: `${basePath}/team/units`,
 							icon: BuildingIcon,
 							isActive: pathname.startsWith(`${basePath}/team/units`),
+						},
+						{
+							label: "Configurações",
+							href: `${orgSettingsPrefix}/general`,
+							icon: SettingsIcon,
+							isActive: pathname.startsWith(`${orgSettingsPrefix}/`),
 						},
 					]
 				: []),
