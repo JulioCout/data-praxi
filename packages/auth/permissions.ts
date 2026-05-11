@@ -17,7 +17,7 @@ export const owner = ac.newRole({
 });
 
 export const admin = ac.newRole({
-	...ownerAc.statements
+	...adminAc.statements,
 });
 
 export const member = ac.newRole({
@@ -26,7 +26,7 @@ export const member = ac.newRole({
 
 // Novos papéis baseados nos padrões
 export const supervisor = ac.newRole({
-	...adminAc.statements,
+	...memberAc.statements,
 });
 
 export const auxiliar = ac.newRole({

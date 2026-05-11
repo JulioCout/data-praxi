@@ -1,3 +1,4 @@
+import { ORPCError } from "@orpc/server";
 import { db } from "@repo/database";
 import { z } from "zod";
 
@@ -16,7 +17,22 @@ export const deleteUnit = protectedProcedure
 			unitId: z.string(),
 		}),
 	)
-	.handler(async ({ input: { organizationId, unitId } }) => {
+	.handler(async ({ input: { organizationId, unitId }, context }) => {
+		const member = await db.member.findUnique({
+			where: {
+				organizationId_userId: {
+					organizationId,
+					userId: context.user.id,
+				},
+			},
+		});
+
+		if (!member || !["owner", "admin"].includes(member.role)) {
+			throw new ORPCError("FORBIDDEN", {
+				message: "Apenas administradores podem excluir unidades.",
+			});
+		}
+
 		await db.unit.delete({
 			where: {
 				id: unitId,

@@ -30,8 +30,8 @@ export const listAllowedUnits = protectedProcedure
 			return [];
 		}
 
-		// Admin, owner and supervisor have access to all units
-		if (["owner", "admin", "supervisor"].includes(member.role)) {
+		// Admin and owner have access to all units
+		if (["owner", "admin"].includes(member.role)) {
 			return await db.unit.findMany({
 				where: {
 					organizationId,

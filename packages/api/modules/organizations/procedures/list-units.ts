@@ -1,3 +1,4 @@
+import { ORPCError } from "@orpc/server";
 import { db } from "@repo/database";
 import { z } from "zod";
 
@@ -15,7 +16,22 @@ export const listUnits = protectedProcedure
 			organizationId: z.string(),
 		}),
 	)
-	.handler(async ({ input: { organizationId } }) => {
+	.handler(async ({ input: { organizationId }, context }) => {
+		const member = await db.member.findUnique({
+			where: {
+				organizationId_userId: {
+					organizationId,
+					userId: context.user.id,
+				},
+			},
+		});
+
+		if (!member || !["owner", "admin"].includes(member.role)) {
+			throw new ORPCError("FORBIDDEN", {
+				message: "Apenas administradores podem listar unidades completas.",
+			});
+		}
+
 		const units = await db.unit.findMany({
 			where: {
 				organizationId,

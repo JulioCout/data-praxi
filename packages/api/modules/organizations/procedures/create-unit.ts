@@ -1,3 +1,4 @@
+import { ORPCError } from "@orpc/server";
 import { db } from "@repo/database";
 import { z } from "zod";
 
@@ -16,7 +17,22 @@ export const createUnit = protectedProcedure
 			name: z.string().min(1),
 		}),
 	)
-	.handler(async ({ input: { organizationId, name } }) => {
+	.handler(async ({ input: { organizationId, name }, context }) => {
+		const member = await db.member.findUnique({
+			where: {
+				organizationId_userId: {
+					organizationId,
+					userId: context.user.id,
+				},
+			},
+		});
+
+		if (!member || !["owner", "admin"].includes(member.role)) {
+			throw new ORPCError("FORBIDDEN", {
+				message: "Apenas administradores podem criar unidades.",
+			});
+		}
+
 		const unit = await db.unit.create({
 			data: {
 				organizationId,

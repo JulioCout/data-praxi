@@ -1,3 +1,4 @@
+import { ORPCError } from "@orpc/server";
 import { db } from "@repo/database";
 import { z } from "zod";
 
@@ -29,9 +30,24 @@ export const updateUnit = protectedProcedure
 			contactEmail: z.string().nullable().optional(),
 		}),
 	)
-	.handler(async ({ input }) => {
+	.handler(async ({ input, context }) => {
 		const { unitId, organizationId, ...data } = input;
 		
+		const member = await db.member.findUnique({
+			where: {
+				organizationId_userId: {
+					organizationId,
+					userId: context.user.id,
+				},
+			},
+		});
+
+		if (!member || !["owner", "admin"].includes(member.role)) {
+			throw new ORPCError("FORBIDDEN", {
+				message: "Apenas administradores podem atualizar unidades.",
+			});
+		}
+
 		const unit = await db.unit.update({
 			where: {
 				id: unitId,

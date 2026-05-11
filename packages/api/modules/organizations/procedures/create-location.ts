@@ -45,7 +45,7 @@ export const createLocation = protectedProcedure
 			});
 		}
 
-		if (!["owner", "admin", "supervisor"].includes(member.role)) {
+		if (!["owner", "admin"].includes(member.role)) {
 			if (!unit.teamId) {
 				throw new ORPCError("FORBIDDEN", {
 					message: "You do not have access to this unit",
