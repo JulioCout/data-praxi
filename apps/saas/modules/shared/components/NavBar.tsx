@@ -40,6 +40,7 @@ import {
 	UsersIcon,
 	BuildingIcon,
 	SettingsIcon,
+	MapPinIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -289,6 +290,16 @@ export function NavBar() {
 				icon: HomeIcon,
 				isActive: pathname === "/" || pathname === basePath,
 			},
+			...(authConfig.organizations.enable && activeOrganization
+				? [
+						{
+							label: "Locais",
+							href: `${basePath}/locations`,
+							icon: MapPinIcon,
+							isActive: pathname.startsWith(`${basePath}/locations`),
+						},
+					]
+				: []),
 
 			...(user?.role === "admin"
 				? [
