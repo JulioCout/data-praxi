@@ -88,7 +88,7 @@ export function LocationsList({ unitId }: { unitId: string }) {
 									
 									<Button
 										size="sm"
-										variant={location.isActive ? "secondary" : "default"}
+										variant={location.isActive ? "secondary" : "primary"}
 										onClick={() => handleToggleActive(location)}
 									>
 										{location.isActive ? "Desativar" : "Ativar"}
@@ -98,7 +98,7 @@ export function LocationsList({ unitId }: { unitId: string }) {
 
 							<CardContent className="space-y-4 text-sm text-muted-foreground">
 								<div className="flex items-center justify-between">
-									<Badge variant={location.isActive ? "default" : "secondary"}>
+									<Badge status={location.isActive ? "success" : "error"}>
 										{location.isActive ? "Ativo" : "Inativo"}
 									</Badge>
 								</div>
